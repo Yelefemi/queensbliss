@@ -30,26 +30,24 @@ export default function Navbar() {
       "
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
-        {/* Logo */}
         <Link href="/" className="flex items-center">
           <img
-            src="/images/queen bliss logouse.png"
+            src="/images/queen%20bliss%20logouse.png"
             alt="Queensbliss logo"
             className="h-20 w-auto"
           />
         </Link>
 
-        {/* Menu - Desktop */}
         <ul className="hidden md:flex items-center gap-8 text-sm font-medium">
           <li><Link href="/" className="text-black transition hover:text-[#d4af37]">Home</Link></li>
           <li><Link href="/shop" className="text-black transition hover:text-[#d4af37]">Shop</Link></li>
+          <li><Link href="/maintenance" className="text-black transition hover:text-[#d4af37]">Maintenance</Link></li>
           <li><Link href="/Hair-Hub" className="text-black transition hover:text-[#d4af37]">Hair Hub</Link></li>
           <li><Link href="/Stylist" className="text-black transition hover:text-[#d4af37]">Stylist</Link></li>
           <li><Link href="/about" className="text-black transition hover:text-[#d4af37]">About</Link></li>
           <li><Link href="/Contact-Us" className="text-black transition hover:text-[#d4af37]">Contact</Link></li>
         </ul>
 
-        {/* Actions */}
         <div className="flex items-center gap-4">
           {user ? (
             <div className="relative hidden md:block">
@@ -128,7 +126,6 @@ export default function Navbar() {
             Shop Now
           </Link>
 
-          {/* Mobile Menu Button */}
           <button
             onClick={() => setShowMobileMenu(!showMobileMenu)}
             className="md:hidden text-black transition hover:text-[#d4af37]"
@@ -141,12 +138,12 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {showMobileMenu && (
         <div className="md:hidden border-t border-gray-200 bg-white">
           <ul className="flex flex-col text-sm font-medium">
             <li><Link href="/" className="block px-4 py-3 text-black transition hover:bg-gray-100 hover:text-[#d4af37]" onClick={() => setShowMobileMenu(false)}>Home</Link></li>
             <li><Link href="/shop" className="block px-4 py-3 text-black transition hover:bg-gray-100 hover:text-[#d4af37]" onClick={() => setShowMobileMenu(false)}>Shop</Link></li>
+            <li><Link href="/maintenance" className="block px-4 py-3 text-black transition hover:bg-gray-100 hover:text-[#d4af37]" onClick={() => setShowMobileMenu(false)}>Maintenance</Link></li>
             <li><Link href="/Hair-Hub" className="block px-4 py-3 text-black transition hover:bg-gray-100 hover:text-[#d4af37]" onClick={() => setShowMobileMenu(false)}>Hair Hub</Link></li>
             <li><Link href="/Stylist" className="block px-4 py-3 text-black transition hover:bg-gray-100 hover:text-[#d4af37]" onClick={() => setShowMobileMenu(false)}>Stylist</Link></li>
             <li><Link href="/about" className="block px-4 py-3 text-black transition hover:bg-gray-100 hover:text-[#d4af37]" onClick={() => setShowMobileMenu(false)}>About</Link></li>

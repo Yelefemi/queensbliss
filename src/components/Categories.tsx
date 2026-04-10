@@ -1,98 +1,119 @@
-import React from 'react';
+import Link from "next/link";
 
 const collections = [
   {
-    title: 'Students',
-    img: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=800&q=80',
-    filter: 'students',
+    title: "Students",
+    subtitle: "Affordable installs that still look polished.",
+    image: "https://images.unsplash.com/photo-1506863530036-1efeddceb993?auto=format&fit=crop&w=1200&q=80",
+    href: "/shop?category=Students",
   },
   {
-    title: 'Brides',
-    img: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
-    filter: 'brides',
+    title: "Brides",
+    subtitle: "Soft texture and ceremony-ready volume.",
+    image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1200&q=80",
+    href: "/shop?category=Brides",
   },
   {
-    title: 'Working-Class',
-    img: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80',
-    filter: 'working-class',
+    title: "Working-Class",
+    subtitle: "Clean finishes that hold up during busy weeks.",
+    image: "https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?auto=format&fit=crop&w=1200&q=80",
+    href: "/shop?category=Working-Class",
   },
   {
-    title: 'Luxury',
-    img: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=800&q=80',
-    filter: 'luxury',
+    title: "Luxury",
+    subtitle: "Full donor bundles with a premium fall.",
+    image: "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=1200&q=80",
+    href: "/shop?category=Luxury",
   },
 ];
 
-const categories = [
+const hairTypes = [
   {
-    title: 'Blend',
-    img: 'https://images.unsplash.com/photo-1542831371-d531d36971e6?auto=format&fit=crop&w=800&q=80',
-    filter: 'blend',
+    title: "Blend",
+    subtitle: "Budget-conscious texture for daily wear.",
+    href: "/shop?hairType=Blend",
   },
   {
-    title: 'Human Hair',
-    img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80',
-    filter: 'human-hair',
+    title: "Human Hair",
+    subtitle: "Soft movement and easy styling flexibility.",
+    href: "/shop?hairType=Human%20Hair",
   },
   {
-    title: 'Raw Donor',
-    img: 'https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=800&q=80',
-    filter: 'raw-donor',
+    title: "Bone Straight",
+    subtitle: "Sharp finish with sleek length.",
+    href: "/shop?hairType=Bone%20Straight",
   },
   {
-    title: 'Bond Straight',
-    img: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=800&q=80',
-    filter: 'bond-straight',
+    title: "Raw Donor",
+    subtitle: "Highest-end fullness and longevity.",
+    href: "/shop?hairType=Raw%20Donor",
   },
 ];
 
 export default function Categories() {
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-16">
-      {/* Collections */}
-      <h2 className="text-3xl font-bold mb-8 text-center">Shop by Collection</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-6 mb-16">
-        {collections.map(({ title, img, filter }) => (
-          <div key={title} className="relative rounded-lg overflow-hidden shadow-lg group">
-            <img
-              src={img}
-              alt={title}
-              className="w-full h-48 object-cover group-hover:scale-105 transition-transform"
-            />
-            <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center text-white p-4">
-              <h3 className="text-2xl font-semibold mb-3">{title}</h3>
-              <a
-                href={`/shop?collection=${filter}`}
-                className="bg-pink-600 px-4 py-2 rounded hover:bg-pink-700 transition"
-              >
-                Explore
-              </a>
-            </div>
-          </div>
-        ))}
-      </div>
+    <section className="px-6 py-10 md:py-14">
+      <div className="mx-auto max-w-7xl space-y-14">
+        <div className="space-y-3 text-center">
+          <p className="text-sm uppercase tracking-[0.35em] text-[#d4af37]">Curated Entry Points</p>
+          <h2 className="text-3xl font-bold md:text-4xl">Start from the collection that fits your life.</h2>
+          <p className="mx-auto max-w-2xl text-sm leading-7 text-gray-300 md:text-base">
+            Whether you are buying for campus, bridal glam, office polish, or luxury styling, the shop is grouped to help people find their lane faster.
+          </p>
+        </div>
 
-      {/* Categories */}
-      <h2 className="text-3xl font-bold mb-8 text-center">Shop by Category</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-6">
-        {categories.map(({ title, img, filter }) => (
-          <div key={title} className="relative rounded-lg overflow-hidden shadow-lg group">
-            <img
-              src={img}
-              alt={title}
-              className="w-full h-48 object-cover group-hover:scale-105 transition-transform"
-            />
-            <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center text-white p-4">
-              <h3 className="text-2xl font-semibold mb-3">{title}</h3>
-              <a
-                href={`/shop?category=${filter}`}
-                className="bg-pink-600 px-4 py-2 rounded hover:bg-pink-700 transition"
-              >
-                Explore
-              </a>
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          {collections.map((item) => (
+            <Link
+              key={item.title}
+              href={item.href}
+              className="group relative overflow-hidden rounded-[1.8rem] border border-white/10 bg-[#0d0d0d] shadow-[0_18px_50px_rgba(0,0,0,0.25)]"
+            >
+              <img
+                src={item.image}
+                alt={item.title}
+                className="h-80 w-full object-cover transition duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/35 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 p-6">
+                <p className="text-xs uppercase tracking-[0.3em] text-[#d4af37]">Collection</p>
+                <h3 className="mt-2 text-2xl font-semibold text-white">{item.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-gray-300">{item.subtitle}</p>
+                <span className="mt-5 inline-flex rounded-full border border-[#d4af37] px-4 py-2 text-sm font-semibold text-[#d4af37] transition group-hover:bg-[#d4af37] group-hover:text-black">
+                  Explore
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6 backdrop-blur-sm md:p-8">
+          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="text-sm uppercase tracking-[0.35em] text-[#d4af37]">Hair Types</p>
+              <h3 className="mt-3 text-3xl font-bold">Filter by finish, not just by price.</h3>
             </div>
+            <Link
+              href="/shop"
+              className="inline-flex rounded-full border border-white/15 px-5 py-3 text-sm font-semibold text-white transition hover:border-[#d4af37] hover:text-[#d4af37]"
+            >
+              View full shop
+            </Link>
           </div>
-        ))}
+
+          <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {hairTypes.map((item) => (
+              <Link
+                key={item.title}
+                href={item.href}
+                className="rounded-[1.5rem] border border-white/10 bg-black/40 p-5 transition hover:border-[#d4af37]/45 hover:bg-black/60"
+              >
+                <h4 className="text-xl font-semibold text-white">{item.title}</h4>
+                <p className="mt-2 text-sm leading-6 text-gray-300">{item.subtitle}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

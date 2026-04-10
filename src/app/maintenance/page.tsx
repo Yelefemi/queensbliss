@@ -1,39 +1,39 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "next/navigation";
-import ProductModal from "@/components/ProductModal";
-import { Product } from "@/types/product";
-import products from "@/data/products";
+import { useMemo, useState } from "react";
+import maintenanceProducts from "@/data/maintenanceProducts";
+import { useCart } from "@/context/CartContext";
 
-const categories = ["Students", "Brides", "Working-Class", "Luxury"];
-const hairTypes = ["Blend", "Human Hair", "Bone Straight", "Raw Donor"];
+const categories = ["Shampoo", "Conditioner", "Treatment", "Styling", "Wig Care"];
+const hairNeeds = [
+  "Dry Hair",
+  "Frizzy Hair",
+  "Protective Styles",
+  "Curly Hair",
+  "Lace Front Wigs",
+  "Straight Hair",
+];
 
-export default function ShopPage() {
-  const searchParams = useSearchParams();
+export default function MaintenancePage() {
+  const { addToCart, cartCount } = useCart();
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
-  const [hairType, setHairType] = useState("all");
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-
-  useEffect(() => {
-    const categoryFromUrl = searchParams.get("category");
-    const hairTypeFromUrl = searchParams.get("hairType");
-
-    setCategory(categoryFromUrl && categories.includes(categoryFromUrl) ? categoryFromUrl : "all");
-    setHairType(hairTypeFromUrl && hairTypes.includes(hairTypeFromUrl) ? hairTypeFromUrl : "all");
-  }, [searchParams]);
+  const [hairNeed, setHairNeed] = useState("all");
 
   const filteredProducts = useMemo(() => {
-    return products.filter((product) => {
-      const matchesSearch = product.name.toLowerCase().includes(search.toLowerCase());
-      const matchesCategory = category === "all" || product.category === category;
-      const matchesHairType = hairType === "all" || product.hairType === hairType;
+    return maintenanceProducts.filter((product) => {
+      const matchesSearch = product.name
+        .toLowerCase()
+        .includes(search.toLowerCase());
+      const matchesCategory =
+        category === "all" || product.category === category;
+      const matchesHairNeed =
+        hairNeed === "all" || product.hairType === hairNeed;
 
-      return matchesSearch && matchesCategory && matchesHairType;
+      return matchesSearch && matchesCategory && matchesHairNeed;
     });
-  }, [category, hairType, search]);
+  }, [category, hairNeed, search]);
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-8 text-white sm:px-6 sm:py-12">
@@ -41,29 +41,30 @@ export default function ShopPage() {
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-3xl">
             <p className="mb-3 text-[10px] uppercase tracking-[0.24em] text-[#d4af37] sm:text-sm sm:tracking-[0.35em]">
-              Hair Shop
+              Hair Maintenance
             </p>
             <h1 className="text-3xl font-bold leading-tight sm:text-4xl md:text-5xl">
-              Shop wigs with the same polished, premium feel as the maintenance line.
+              Pick the products that keep your hair and wigs looking fresh.
             </h1>
             <p className="mt-4 max-w-2xl text-sm leading-6 text-gray-300 md:text-base">
-              Browse by collection or texture, then open any product card for details and add it directly to your cart.
+              Build a routine with cleansers, treatments, styling essentials, and wig-care products,
+              then add everything to the same cart before checkout.
             </p>
           </div>
 
           <Link
-            href="/maintenance"
+            href="/Cart"
             className="inline-flex w-full items-center justify-center rounded-full border border-[#d4af37] px-6 py-3 text-sm font-semibold text-[#d4af37] transition hover:bg-[#d4af37] hover:text-black sm:w-auto"
           >
-            Shop Maintenance Too
+            View Cart ({cartCount})
           </Link>
         </div>
       </section>
 
-      <section className="mb-8 grid gap-3 md:grid-cols-3 md:gap-4">
+      <section className="mb-8 grid gap-3 md:grid-cols-3 md:gap-4 sm:mb-10">
         <input
           type="text"
-          placeholder="Search wigs..."
+          placeholder="Search maintenance products..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="rounded-full border border-[#d4af37]/50 bg-black px-5 py-3 text-white outline-none transition focus:border-[#d4af37]"
@@ -74,7 +75,7 @@ export default function ShopPage() {
           onChange={(e) => setCategory(e.target.value)}
           className="rounded-full border border-[#d4af37]/50 bg-black px-5 py-3 text-white outline-none transition focus:border-[#d4af37]"
         >
-          <option value="all">All collections</option>
+          <option value="all">All categories</option>
           {categories.map((item) => (
             <option key={item} value={item}>
               {item}
@@ -83,12 +84,12 @@ export default function ShopPage() {
         </select>
 
         <select
-          value={hairType}
-          onChange={(e) => setHairType(e.target.value)}
+          value={hairNeed}
+          onChange={(e) => setHairNeed(e.target.value)}
           className="rounded-full border border-[#d4af37]/50 bg-black px-5 py-3 text-white outline-none transition focus:border-[#d4af37]"
         >
-          <option value="all">All hair types</option>
-          {hairTypes.map((item) => (
+          <option value="all">All hair needs</option>
+          {hairNeeds.map((item) => (
             <option key={item} value={item}>
               {item}
             </option>
@@ -96,31 +97,15 @@ export default function ShopPage() {
         </select>
       </section>
 
-      <section className="mb-8 flex flex-wrap gap-3 sm:mb-10">
-        <button
-          onClick={() => setCategory("all")}
-          className={`rounded-full px-4 py-2 text-sm font-medium transition ${category === "all" ? "bg-[#d4af37] text-black" : "border border-white/10 bg-white/5 text-gray-200 hover:border-[#d4af37]/45"}`}
-        >
-          All
-        </button>
-        {categories.map((item) => (
-          <button
-            key={item}
-            onClick={() => setCategory(item)}
-            className={`rounded-full px-4 py-2 text-sm font-medium transition ${category === item ? "bg-[#d4af37] text-black" : "border border-white/10 bg-white/5 text-gray-200 hover:border-[#d4af37]/45"}`}
-          >
-            {item}
-          </button>
-        ))}
-      </section>
-
       {filteredProducts.length === 0 ? (
         <div className="rounded-3xl border border-white/10 bg-white/5 px-6 py-14 text-center">
-          <p className="text-lg font-semibold">No wigs match those filters.</p>
-          <p className="mt-2 text-sm text-gray-300">Try another collection or hair type.</p>
+          <p className="text-lg font-semibold">No maintenance products match those filters.</p>
+          <p className="mt-2 text-sm text-gray-300">
+            Try another category or hair need.
+          </p>
         </div>
       ) : (
-        <section className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        <section className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {filteredProducts.map((product) => (
             <article
               key={product.id}
@@ -129,7 +114,7 @@ export default function ShopPage() {
               <img
                 src={product.image}
                 alt={product.name}
-                className="h-72 w-full object-cover"
+                className="h-64 w-full object-cover"
               />
 
               <div className="space-y-4 p-6">
@@ -168,23 +153,16 @@ export default function ShopPage() {
                   </p>
 
                   <button
-                    onClick={() => setSelectedProduct(product)}
-                    className="rounded-full border border-[#d4af37] px-5 py-3 text-sm font-bold text-[#d4af37] transition hover:bg-[#d4af37] hover:text-black"
+                    onClick={() => addToCart(product)}
+                    className="rounded-full bg-[#d4af37] px-5 py-3 text-sm font-bold text-black transition hover:bg-white"
                   >
-                    View Details
+                    Add to Cart
                   </button>
                 </div>
               </div>
             </article>
           ))}
         </section>
-      )}
-
-      {selectedProduct && (
-        <ProductModal
-          product={selectedProduct}
-          onClose={() => setSelectedProduct(null)}
-        />
       )}
     </main>
   );

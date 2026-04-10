@@ -7,25 +7,25 @@ const testimonials = [
     name: "Aisha O.",
     role: "Bride",
     message:
-      "Queen’s Bliss hair made my wedding day perfect. The quality was premium and the styling was flawless.",
+      "Queen Bliss hair made my wedding morning feel effortless. The texture, fullness, and finish all felt premium.",
   },
   {
     name: "Blessing K.",
-    role: "Working Class",
+    role: "Working-Class Client",
     message:
-      "I love how natural the hair feels. I’ve worn mine for months and it still looks brand new.",
+      "My wig still looks polished after months. It gives me that neat, put-together look every work week.",
   },
   {
     name: "Maryam S.",
     role: "Stylist",
     message:
-      "As a stylist, Queen’s Bliss is my go-to brand. Clients always ask where the hair is from.",
+      "Clients notice the quality immediately. Queen Bliss is one of the few brands I can install without overexplaining the difference.",
   },
   {
     name: "Jennifer A.",
     role: "Luxury Client",
     message:
-      "The raw donor hair is unmatched. Soft, full, and worth every naira.",
+      "The raw donor hair is worth it. Full, soft, and easy to refresh with the maintenance line.",
   },
 ];
 
@@ -43,26 +43,31 @@ export default function Testimonials() {
   const testimonial = testimonials[index];
 
   return (
-    <section className="bg-black py-20">
-      <div className="mx-auto max-w-4xl px-6 text-center">
-        <h2 className="mb-10 text-3xl md:text-4xl font-bold text-white">
-          What Our Clients Say
-        </h2>
+    <section className="px-6 py-14 md:py-16">
+      <div className="mx-auto max-w-5xl rounded-[2rem] border border-white/10 bg-white/5 p-8 text-center shadow-[0_18px_50px_rgba(0,0,0,0.2)] backdrop-blur-sm md:p-10">
+        <p className="text-sm uppercase tracking-[0.35em] text-[#d4af37]">Client Notes</p>
+        <h2 className="mt-3 text-3xl font-bold md:text-4xl">What people say after they wear it.</h2>
 
-        <div
-          key={index}
-          className="transition-opacity duration-700 ease-in-out"
-        >
-          <p className="mb-6 text-xl text-gray-300 italic">
+        <div key={index} className="mt-10 transition-opacity duration-700 ease-in-out">
+          <p className="mx-auto max-w-3xl text-xl leading-9 text-gray-200 md:text-2xl">
             “{testimonial.message}”
           </p>
 
-          <p className="font-semibold text-[#d4af37]">
-            {testimonial.name}
-          </p>
-          <p className="text-sm text-gray-400">
-            {testimonial.role}
-          </p>
+          <div className="mt-8">
+            <p className="text-lg font-semibold text-[#d4af37]">{testimonial.name}</p>
+            <p className="text-sm text-gray-400">{testimonial.role}</p>
+          </div>
+        </div>
+
+        <div className="mt-8 flex justify-center gap-3">
+          {testimonials.map((item, itemIndex) => (
+            <button
+              key={item.name}
+              aria-label={`View testimonial ${itemIndex + 1}`}
+              onClick={() => setIndex(itemIndex)}
+              className={`h-2.5 rounded-full transition ${itemIndex === index ? "w-10 bg-[#d4af37]" : "w-2.5 bg-white/20"}`}
+            />
+          ))}
         </div>
       </div>
     </section>

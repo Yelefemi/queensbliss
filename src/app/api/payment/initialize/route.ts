@@ -2,6 +2,13 @@ import { NextResponse } from "next/server";
 import { initializePaystackPayment } from "@/lib/paystack";
 
 export async function POST(req: Request) {
+  if (!process.env.PAYSTACK_SECRET_KEY) {
+    return NextResponse.json(
+      { message: "Payments are not configured yet." },
+      { status: 503 }
+    );
+  }
+
   const { email, amount } = await req.json();
   if (!email || !amount) return NextResponse.json({ message: "Email and amount required" }, { status: 400 });
 

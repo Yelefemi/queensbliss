@@ -1,6 +1,27 @@
 import { NextResponse } from "next/server";
-import { validateEmail, validatePassword, hashPassword, generateToken } from "@/lib/auth";
-import { getUsers, saveUsers } from "@/lib/users";
+import {
+  generateToken,
+  hashPassword,
+  type Address,
+  validateEmail,
+  validatePassword,
+} from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+
+function normalizeAddress(address: unknown): Address | undefined {
+  if (!address || typeof address !== "object" || Array.isArray(address)) {
+    return undefined;
+  }
+
+  const candidate = address as Record<string, unknown>;
+
+  return {
+    street: String(candidate.street ?? ""),
+    city: String(candidate.city ?? ""),
+    state: String(candidate.state ?? ""),
+    zip: String(candidate.zip ?? ""),
+  };
+}
 
 export async function POST(req: Request) {
   try {
@@ -14,10 +35,7 @@ export async function POST(req: Request) {
     }
 
     if (!validateEmail(email)) {
-      return NextResponse.json(
-        { message: "Invalid email" },
-        { status: 400 }
-      );
+      return NextResponse.json({ message: "Invalid email" }, { status: 400 });
     }
 
     const passwordValidation = validatePassword(password);
@@ -28,40 +46,57 @@ export async function POST(req: Request) {
       );
     }
 
-    const users = await getUsers();
+    const existingUser = await prisma.user.findUnique({
+      where: { email },
+      select: { id: true },
+    });
 
-    if (users.some((u) => u.email === email)) {
+    if (existingUser) {
       return NextResponse.json(
         { message: "Email already registered" },
         { status: 409 }
       );
     }
 
+    const normalizedAddress = normalizeAddress(address);
     const hashedPassword = await hashPassword(password);
 
-    const newUser = {
-      id: Date.now().toString(),
-      name,
-      email,
-      password: hashedPassword,
-      address,
-    };
+    const newUser = await prisma.user.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+        address: normalizedAddress ?? undefined,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        address: true,
+      },
+    });
 
-    users.push(newUser);
-
-    await saveUsers(users);
-
-    const token = await generateToken({ id: newUser.id, email: newUser.email, name: newUser.name });
+    const token = await generateToken({
+      id: newUser.id,
+      email: newUser.email,
+      name: newUser.name,
+      address: normalizedAddress,
+    });
 
     return NextResponse.json(
-      { user: { id: newUser.id, email: newUser.email, name: newUser.name, address: newUser.address }, token },
+      {
+        user: {
+          id: newUser.id,
+          email: newUser.email,
+          name: newUser.name,
+          address: normalizedAddress,
+        },
+        token,
+      },
       { status: 201 }
     );
   } catch (error) {
     console.error("SIGNUP ERROR:", error);
-    return NextResponse.json(
-      { message: "Signup failed" },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "Signup failed" }, { status: 500 });
   }
 }

@@ -7,6 +7,13 @@ export async function initializePaystackPayment({
   amount: number; // in kobo
   reference: string;
 }) {
+  if (!process.env.PAYSTACK_SECRET_KEY) {
+    return {
+      status: false,
+      message: "Paystack is not configured yet.",
+    };
+  }
+
   const res = await fetch("https://api.paystack.co/transaction/initialize", {
     method: "POST",
     headers: {

@@ -49,6 +49,8 @@ export default function Checkout() {
   const [shippingAddress, setShippingAddress] = useState<ShippingAddress>(EMPTY_ADDRESS);
   const [paymentMethod, setPaymentMethod] = useState<"card" | "transfer">("card");
   const [paystackLoaded, setPaystackLoaded] = useState(false);
+  const paystackPublicKey = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY;
+  const paymentsEnabled = Boolean(paystackPublicKey);
 
   useEffect(() => {
     if (searchParams.get("success") === "true") {
@@ -80,6 +82,11 @@ export default function Checkout() {
   const userEmail = user?.email;
 
   async function handlePayment() {
+    if (!paymentsEnabled) {
+      alert("Payments are not enabled yet. The site can be reviewed, but checkout is temporarily unavailable.");
+      return;
+    }
+
     if (!userEmail) {
       alert("Please log in to continue");
       return;
@@ -99,12 +106,16 @@ export default function Checkout() {
         const data = await res.json();
 
         if (!res.ok || !data.paymentUrl) {
-          throw new Error("Payment init failed");
+          throw new Error(data.message || "Payment init failed");
         }
 
         window.location.href = data.paymentUrl;
-      } catch {
-        alert("Payment failed. Please try again.");
+      } catch (error) {
+        const message =
+          error instanceof Error
+            ? error.message
+            : "Payment failed. Please try again.";
+        alert(message);
       }
 
       return;
@@ -114,13 +125,18 @@ export default function Checkout() {
   }
 
   function handleCardPayment() {
+    if (!paymentsEnabled) {
+      alert("Payments are not enabled yet. Add your Paystack keys after approval.");
+      return;
+    }
+
     if (!paystackLoaded || !window.PaystackPop) {
       alert("Paystack is loading, please wait...");
       return;
     }
 
     const handler = window.PaystackPop.setup({
-      key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
+      key: paystackPublicKey,
       email: userEmail,
       amount: totalAmount * 100,
       currency: "NGN",
@@ -139,13 +155,24 @@ export default function Checkout() {
 
   return (
     <>
-      <Script
-        src="https://js.paystack.co/v1/inline.js"
-        strategy="afterInteractive"
-        onLoad={() => setPaystackLoaded(true)}
-      />
+      {paymentsEnabled && (
+        <Script
+          src="https://js.paystack.co/v1/inline.js"
+          strategy="afterInteractive"
+          onLoad={() => setPaystackLoaded(true)}
+        />
+      )}
 
       <main className="mx-auto max-w-7xl px-6 py-12">
+        {!paymentsEnabled && (
+          <div className="mb-8 rounded-lg border border-amber-500/60 bg-amber-950/50 p-6">
+            <h2 className="text-xl font-bold text-amber-200">Payments Coming Soon</h2>
+            <p className="mt-2 text-sm text-amber-100/80">
+              The store is live for review and product browsing. Online payments will be enabled after Paystack approval.
+            </p>
+          </div>
+        )}
+
         {paymentSuccess && (
           <div className="mb-8 rounded-lg border border-green-500 bg-green-900 p-6">
             <h2 className="text-xl font-bold text-green-200">Payment Successful!</h2>
@@ -313,9 +340,13 @@ export default function Checkout() {
             <button
               className="w-full rounded bg-[#d4af37] px-4 py-3 font-bold text-black transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-50"
               onClick={handlePayment}
-              disabled={paymentMethod === "card" && !paystackLoaded}
+              disabled={!paymentsEnabled || (paymentMethod === "card" && !paystackLoaded)}
             >
-              {paymentMethod === "card" ? (paystackLoaded ? "Pay with Card" : "Loading Paystack...") : "Pay with Transfer"}
+              {!paymentsEnabled
+                ? "Payments Coming Soon"
+                : paymentMethod === "card"
+                  ? (paystackLoaded ? "Pay with Card" : "Loading Paystack...")
+                  : "Pay with Transfer"}
             </button>
 
             <Link

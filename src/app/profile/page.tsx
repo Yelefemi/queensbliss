@@ -1,8 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
-type Order = { 
+type Order = {
   id: number;
   date: string;
   total: number;
@@ -10,13 +11,11 @@ type Order = {
 };
 
 export default function ProfilePage() {
-  // Mock user data
   const [user] = useState({
     name: "Jane Doe",
     email: "jane.doe@example.com",
   });
 
-  // Mock order history
   const [orders] = useState<Order[]>([
     {
       id: 1001,
@@ -40,7 +39,24 @@ export default function ProfilePage() {
         <h2 className="mb-3 text-xl font-semibold">Account Information</h2>
         <p><strong>Name:</strong> {user.name}</p>
         <p><strong>Email:</strong> {user.email}</p>
-        {/* You can add profile editing here later */}
+      </section>
+
+      <section className="mb-10 rounded-3xl border border-[#d4af37]/30 bg-[#111111] p-6 text-white">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div>
+            <h2 className="text-xl font-semibold">Hair Maintenance Products</h2>
+            <p className="mt-2 max-w-2xl text-sm text-gray-300">
+              Shop shampoos, conditioners, oils, and wig-care essentials that can be added straight to your cart.
+            </p>
+          </div>
+
+          <Link
+            href="/maintenance"
+            className="inline-flex items-center justify-center rounded-full bg-[#d4af37] px-5 py-3 text-sm font-bold text-black transition hover:bg-white"
+          >
+            Shop Maintenance
+          </Link>
+        </div>
       </section>
 
       <section>
@@ -62,7 +78,7 @@ export default function ProfilePage() {
                 <tr key={order.id}>
                   <td className="border border-gray-300 px-4 py-2">{order.id}</td>
                   <td className="border border-gray-300 px-4 py-2">{order.date}</td>
-                  <td className="border border-gray-300 px-4 py-2">₦{order.total.toLocaleString()}</td>
+                  <td className="border border-gray-300 px-4 py-2">NGN {order.total.toLocaleString()}</td>
                   <td className="border border-gray-300 px-4 py-2">{order.status}</td>
                 </tr>
               ))}
