@@ -74,19 +74,34 @@ export default function Footer() {
             <h4 className="mb-3 font-semibold text-white">Contact</h4>
             <address className="not-italic text-sm leading-relaxed text-gray-300">
               Lagos, Nigeria<br />
-              Phone: +234 800 123 4567<br />
-              Email: hello@queensbliss.com
+              Phone: +234 8126608144<br />
+              Email: robbiniyanuoluwa@gmail.com
             </address>
 
             <div className="mt-6 flex flex-wrap gap-4 text-sm">
-              <a href="#" className="transition hover:text-[#d4af37]">
+              <a
+                href="https://instagram.com/queeniyanuoluwaofficial"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition hover:text-[#d4af37]"
+              >
                 Instagram
               </a>
-              <a href="#" className="transition hover:text-[#d4af37]">
+              <a
+                href="https://tiktok.com/@queeniyanu"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition hover:text-[#d4af37]"
+              >
                 TikTok
               </a>
-              <a href="#" className="transition hover:text-[#d4af37]">
-                WhatsApp
+              <a
+                href="https://facebook.com/MaryIyanuoluwa"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition hover:text-[#d4af37]"
+              >
+                Facebook
               </a>
             </div>
           </div>

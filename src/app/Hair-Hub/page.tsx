@@ -77,7 +77,7 @@ export default function HairHubPage() {
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a
-              href="https://wa.me/2349028367079?text=Hello%20Queen%27s%20Bliss,%20I%20need%20help%20choosing%20hair"
+              href="https://wa.me/2349038829611?text=Hello%20Queen%27s%20Bliss,%20I%20need%20help%20choosing%20hair"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center rounded-full bg-[#d4af37] px-6 py-3 text-sm font-bold text-black transition hover:bg-white"

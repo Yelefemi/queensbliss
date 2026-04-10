@@ -1,3 +1,5 @@
+import crypto from "crypto";
+
 export async function initializePaystackPayment({
   email,
   amount,
@@ -32,4 +34,19 @@ export async function initializePaystackPayment({
 
   const data = await res.json();
   return data;
+}
+
+export function verifyPaystackSignature(payload: string, signature: string | null) {
+  const secret = process.env.PAYSTACK_WEBHOOK_SECRET || process.env.PAYSTACK_SECRET_KEY;
+
+  if (!secret || !signature) {
+    return false;
+  }
+
+  const hash = crypto
+    .createHmac("sha512", secret)
+    .update(payload, "utf8")
+    .digest("hex");
+
+  return hash === signature;
 }

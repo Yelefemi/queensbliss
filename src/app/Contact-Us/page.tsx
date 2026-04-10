@@ -127,7 +127,7 @@ export default function ContactPage() {
             <h2 className="text-2xl font-semibold text-white">Direct contact</h2>
             <div className="mt-5 space-y-4 text-sm text-gray-300">
               <p>Phone: +234 8126608144</p>
-              <p>Email: </p>
+              <p>Email: robbiniyanuoluwa@gmail.com</p>
               <p>Location: Lagos, Nigeria</p>
             </div>
           </div>
@@ -145,6 +145,32 @@ export default function ContactPage() {
             >
               Chat on WhatsApp
             </a>
+            <div className="mt-6 flex flex-wrap gap-4 text-sm text-gray-300">
+              <a
+                href="https://instagram.com/queeniyanuoluwaofficial"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition hover:text-[#d4af37]"
+              >
+                Instagram: queeniyanuoluwaofficial
+              </a>
+              <a
+                href="https://tiktok.com/@queeniyanu"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition hover:text-[#d4af37]"
+              >
+                TikTok: queeniyanu
+              </a>
+              <a
+                href="https://facebook.com/MaryIyanuoluwa"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition hover:text-[#d4af37]"
+              >
+                Facebook: Mary Iyanuoluwa
+              </a>
+            </div>
           </div>
         </div>
       </section>
