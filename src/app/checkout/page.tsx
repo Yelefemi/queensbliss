@@ -108,6 +108,13 @@ export default function Checkout() {
           body: JSON.stringify({
             email: userEmail,
             amount: totalAmount,
+            customerName: user?.name,
+            userId: user?.id,
+            items: cartItems,
+            shippingAddress,
+            subtotal: total,
+            shipping,
+            tax,
           }),
         });
 

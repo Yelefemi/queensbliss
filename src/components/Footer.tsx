@@ -88,20 +88,12 @@ export default function Footer() {
                 Instagram
               </a>
               <a
-                href="https://tiktok.com/@queeniyanu"
+                href="https://tiktok.com/@queenmaryiyanuoluwa"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="transition hover:text-[#d4af37]"
               >
                 TikTok
-              </a>
-              <a
-                href="https://facebook.com/MaryIyanuoluwa"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="transition hover:text-[#d4af37]"
-              >
-                Facebook
               </a>
             </div>
           </div>

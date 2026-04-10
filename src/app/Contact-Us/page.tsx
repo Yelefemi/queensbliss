@@ -155,20 +155,12 @@ export default function ContactPage() {
                 Instagram: queeniyanuoluwaofficial
               </a>
               <a
-                href="https://tiktok.com/@queeniyanu"
+                href="https://tiktok.com/@queenmaryiyanuoluwa"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="transition hover:text-[#d4af37]"
               >
-                TikTok: queeniyanu
-              </a>
-              <a
-                href="https://facebook.com/MaryIyanuoluwa"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="transition hover:text-[#d4af37]"
-              >
-                Facebook: Mary Iyanuoluwa
+                TikTok: @queenmaryiyanuoluwa
               </a>
             </div>
           </div>

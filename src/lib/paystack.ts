@@ -4,10 +4,12 @@ export async function initializePaystackPayment({
   email,
   amount,
   reference,
+  metadata,
 }: {
   email: string;
   amount: number; // in kobo
   reference: string;
+  metadata?: Record<string, unknown>;
 }) {
   if (!process.env.PAYSTACK_SECRET_KEY) {
     return {
@@ -28,6 +30,7 @@ export async function initializePaystackPayment({
       reference,
       currency: "NGN",
       channels: ["card", "bank_transfer"], // Allow both card and transfer
+      metadata,
       callback_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/checkout?success=true`, // Redirect back after payment
     }),
   });

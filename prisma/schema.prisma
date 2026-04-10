@@ -13,6 +13,45 @@ model User {
   name      String
   password  String
   address   Json?
+  orders    Order[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  FAILED
+}
+
+model Order {
+  id               String      @id @default(cuid())
+  userId           String?
+  user             User?       @relation(fields: [userId], references: [id])
+  customerName     String
+  customerEmail    String
+  paymentReference String      @unique
+  status           OrderStatus @default(PENDING)
+  subtotal         Int
+  shipping         Int
+  tax              Int
+  total            Int
+  shippingAddress  Json?
+  items            OrderItem[]
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+}
+
+model OrderItem {
+  id         String @id @default(cuid())
+  orderId    String
+  order      Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId  Int
+  name       String
+  category   String
+  hairType   String
+  image      String
+  price      Int
+  quantity   Int
+  collection String?
 }

@@ -148,6 +148,11 @@ export default function Navbar() {
             <li><Link href="/Stylist" className="block px-4 py-3 text-black transition hover:bg-gray-100 hover:text-[#d4af37]" onClick={() => setShowMobileMenu(false)}>Stylist</Link></li>
             <li><Link href="/about" className="block px-4 py-3 text-black transition hover:bg-gray-100 hover:text-[#d4af37]" onClick={() => setShowMobileMenu(false)}>About</Link></li>
             <li><Link href="/Contact-Us" className="block px-4 py-3 text-black transition hover:bg-gray-100 hover:text-[#d4af37]" onClick={() => setShowMobileMenu(false)}>Contact</Link></li>
+            {user ? (
+              <li><button onClick={() => { logout(); setShowMobileMenu(false); }} className="block w-full px-4 py-3 text-left text-red-600 transition hover:bg-gray-100">Logout</button></li>
+            ) : (
+              <li><Link href="/auth/login" className="block px-4 py-3 text-black transition hover:bg-gray-100 hover:text-[#d4af37]" onClick={() => setShowMobileMenu(false)}>Login / Sign Up</Link></li>
+            )}
           </ul>
         </div>
       )}
