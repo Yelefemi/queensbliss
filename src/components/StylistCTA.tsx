@@ -31,7 +31,7 @@ export default function StylistCTA() {
 
         <div className="relative overflow-hidden rounded-[1.8rem] border border-white/10">
           <img
-            src="https://images.unsplash.com/photo-1517230878791-4d28214057c2?auto=format&fit=crop&w=1200&q=80"
+            src="https://i.pinimg.com/736x/37/d3/ba/37d3ba5ecddf186e08aa89ec0eb596e8.jpg"
             alt="Hair stylist at work"
             className="h-full min-h-[380px] w-full object-cover"
           />

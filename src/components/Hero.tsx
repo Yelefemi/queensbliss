@@ -60,7 +60,7 @@ export default function Hero() {
 
           <div className="relative overflow-hidden rounded-[1.6rem] border border-white/10 bg-[#0d0d0d] p-3 shadow-[0_24px_80px_rgba(0,0,0,0.35)] sm:rounded-[2rem] sm:p-4">
             <img
-              src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=1200&q=80"
+              src="https://i.pinimg.com/1200x/af/c7/7b/afc77b328645f19aed2d831e79692361.jpg"
               alt="Queen Bliss premium wig collection"
               className="h-[360px] w-full rounded-[1.2rem] object-cover sm:h-[440px] sm:rounded-[1.5rem] lg:h-[520px]"
             />

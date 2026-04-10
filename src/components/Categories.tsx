@@ -4,25 +4,25 @@ const collections = [
   {
     title: "Students",
     subtitle: "Affordable installs that still look polished.",
-    image: "https://images.unsplash.com/photo-1506863530036-1efeddceb993?auto=format&fit=crop&w=1200&q=80",
+    image: "https://i.pinimg.com/736x/9f/44/b1/9f44b193af713506c02c5ac9cf58a47a.jpg",
     href: "/shop?category=Students",
   },
   {
     title: "Brides",
     subtitle: "Soft texture and ceremony-ready volume.",
-    image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1200&q=80",
+    image: "https://i.pinimg.com/1200x/35/10/57/35105799ef4c4d7f0b8d7aca2c61e011.jpg",
     href: "/shop?category=Brides",
   },
   {
     title: "Working-Class",
     subtitle: "Clean finishes that hold up during busy weeks.",
-    image: "https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?auto=format&fit=crop&w=1200&q=80",
+    image: "https://i.pinimg.com/736x/0a/de/79/0ade7978a78e1880decc809bdd382f60.jpg",
     href: "/shop?category=Working-Class",
   },
   {
     title: "Luxury",
     subtitle: "Full donor bundles with a premium fall.",
-    image: "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=1200&q=80",
+    image: "https://i.pinimg.com/736x/8c/67/40/8c67403f44353e0c58f0874eaddf6912.jpg",
     href: "/shop?category=Luxury",
   },
 ];

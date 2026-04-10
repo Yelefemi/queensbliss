@@ -1,101 +1,152 @@
 "use client";
 
-import { useState, useRef, FormEvent } from "react";
-import emailjs from "@emailjs/browser";
+import { FormEvent, useState } from "react";
+
+type Status = {
+  type: "success" | "error" | "";
+  message: string;
+};
 
 export default function ContactPage() {
-  const form = useRef<HTMLFormElement>(null);
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState<Status>({ type: "", message: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const sendEmail = (e: FormEvent) => {
+  async function sendMessage(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
 
-    if (!form.current) return;
+    setIsSubmitting(true);
+    setStatus({ type: "", message: "" });
 
-    emailjs
-      .sendForm(
-        "YOUR_SERVICE_ID",
-        "YOUR_TEMPLATE_ID",
-        form.current,
-        "YOUR_PUBLIC_KEY"
-      )
-      .then(
-        () => {
-          setStatus("Message sent successfully!");
-          form.current?.reset();
-        },
-        () => {
-          setStatus("Failed to send message, please try again.");
-        }
-      );
-  };
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.get("name"),
+          email: formData.get("email"),
+          message: formData.get("message"),
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || "Unable to send message right now.");
+      }
+
+      setStatus({
+        type: "success",
+        message: "Message sent successfully. We will get back to you shortly.",
+      });
+      form.reset();
+    } catch (error) {
+      setStatus({
+        type: "error",
+        message:
+          error instanceof Error
+            ? error.message
+            : "Failed to send message. Please try again later.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   return (
-    <main className="pt-20 px-6 max-w-3xl mx-auto">
-      <h1 className="mb-8 text-4xl font-bold text-center">Contact Us</h1>
+    <main className="mx-auto max-w-7xl px-4 py-8 text-white sm:px-6 sm:py-12">
+      <section className="rounded-[1.8rem] border border-[#d4af37]/35 bg-[linear-gradient(135deg,#050505_0%,#111111_55%,#24190a_100%)] px-5 py-10 shadow-[0_24px_80px_rgba(0,0,0,0.32)] sm:px-8 md:px-10">
+        <p className="mb-3 text-[10px] uppercase tracking-[0.24em] text-[#d4af37] sm:text-sm sm:tracking-[0.35em]">
+          Contact Us
+        </p>
+        <h1 className="text-3xl font-bold leading-tight sm:text-4xl md:text-5xl">
+          Reach the Queen Bliss team directly.
+        </h1>
+        <p className="mt-4 max-w-2xl text-sm leading-7 text-gray-300 md:text-base">
+          Use the form below for product questions, order support, styling enquiries, or partnership conversations.
+        </p>
+      </section>
 
-      <form ref={form} onSubmit={sendEmail} className="space-y-6">
-        <input
-          type="text"
-          name="user_name"
-          placeholder="Your name"
-          required
-          className="w-full rounded border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#d4af37]"
-        />
-
-        <input
-          type="email"
-          name="user_email"
-          placeholder="Your email"
-          required
-          className="w-full rounded border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#d4af37]"
-        />
-
-        <textarea
-          name="message"
-          placeholder="Your message"
-          required
-          rows={5}
-          className="w-full rounded border border-gray-300 px-4 py-3 resize-none focus:outline-none focus:ring-2 focus:ring-[#d4af37]"
-        />
-
-        <button
-          type="submit"
-          className="w-full rounded bg-[#d4af37] px-6 py-3 font-bold text-black hover:bg-[#b5942f] transition"
+      <section className="grid gap-6 py-10 lg:grid-cols-[1.1fr_0.9fr] md:py-14">
+        <form
+          onSubmit={sendMessage}
+          className="rounded-[1.8rem] border border-white/10 bg-[#0d0d0d] p-6 shadow-[0_18px_50px_rgba(0,0,0,0.22)]"
         >
-          Send Message
-        </button>
+          <h2 className="text-2xl font-semibold text-white">Send a message</h2>
 
-        {status && (
-          <p
-            className={`text-center font-semibold mt-4 ${
-              status.includes("success") ? "text-green-600" : "text-red-600"
-            }`}
+          <div className="mt-6 grid gap-4">
+            <input
+              type="text"
+              name="name"
+              placeholder="Your name"
+              required
+              className="w-full rounded-full border border-white/10 bg-black px-5 py-3 text-white outline-none transition focus:border-[#d4af37]"
+            />
+
+            <input
+              type="email"
+              name="email"
+              placeholder="Your email"
+              required
+              className="w-full rounded-full border border-white/10 bg-black px-5 py-3 text-white outline-none transition focus:border-[#d4af37]"
+            />
+
+            <textarea
+              name="message"
+              placeholder="Tell us what you need help with"
+              required
+              rows={7}
+              className="w-full rounded-[1.5rem] border border-white/10 bg-black px-5 py-4 text-white outline-none transition focus:border-[#d4af37]"
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="mt-6 w-full rounded-full bg-[#d4af37] px-6 py-3 font-bold text-black transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {status}
-          </p>
-        )}
-      </form>
+            {isSubmitting ? "Sending..." : "Send Message"}
+          </button>
 
-      <section className="mt-12 text-center text-gray-600">
-        <p className="mb-3">Or reach us directly:</p>
+          {status.message && (
+            <p
+              className={`mt-4 rounded-[1.2rem] px-4 py-3 text-sm ${
+                status.type === "success"
+                  ? "border border-emerald-500/40 bg-emerald-950/40 text-emerald-200"
+                  : "border border-red-500/40 bg-red-950/40 text-red-200"
+              }`}
+            >
+              {status.message}
+            </p>
+          )}
+        </form>
 
-        <p className="font-semibold hover:text-[#d4af37] transition cursor-default">
-          📞 +234 800 123 4567
-        </p>
+        <div className="space-y-6">
+          <div className="rounded-[1.8rem] border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
+            <h2 className="text-2xl font-semibold text-white">Direct contact</h2>
+            <div className="mt-5 space-y-4 text-sm text-gray-300">
+              <p>Phone: +234 8126608144</p>
+              <p>Email: </p>
+              <p>Location: Lagos, Nigeria</p>
+            </div>
+          </div>
 
-        <p className="hover:text-[#d4af37] transition cursor-default">
-          📧 support@queenblisshair.com
-        </p>
-
-        <a
-          href="https://wa.me/2348001234567"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-6 inline-block rounded border border-[#d4af37] px-8 py-3 text-[#d4af37] hover:bg-[#d4af37] hover:text-black transition"
-        >
-          💬 Chat on WhatsApp
-        </a>
+          <div className="rounded-[1.8rem] border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
+            <h3 className="text-2xl font-semibold text-white">Quick response</h3>
+            <p className="mt-3 text-sm leading-7 text-gray-300">
+              If your request is urgent, message the team on WhatsApp for faster assistance with product recommendations or order questions.
+            </p>
+            <a
+              href="https://wa.me/2349038829611?text=Hello%20Queen%20Bliss%20team%2C%20I%20need%20assistance%20with..."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex rounded-full border border-[#d4af37] px-6 py-3 text-sm font-semibold text-[#d4af37] transition hover:bg-[#d4af37] hover:text-black"
+            >
+              Chat on WhatsApp
+            </a>
+          </div>
+        </div>
       </section>
     </main>
   );

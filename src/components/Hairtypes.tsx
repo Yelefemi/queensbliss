@@ -4,14 +4,14 @@ const occasions = [
   {
     title: "Bridal Bliss",
     description: "Soft volume, flattering shine, and styles that hold through a long event day.",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1200&q=80",
+    image: "https://i.pinimg.com/736x/90/a4/57/90a45787941b0ac0d0185bb7be2b4927.jpg",
     href: "/shop?category=Brides",
     eyebrow: "Event Ready",
   },
   {
     title: "Campus Queen",
     description: "Easy-going units with a lighter price point and enough polish for classes and outings.",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1200&q=80",
+    image: "https://i.pinimg.com/736x/95/8b/9e/958b9ee63429eaa936e8b99ff0067a46.jpg",
     href: "/shop?category=Students",
     eyebrow: "Everyday Style",
   },
